@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { JSX, useState } from "react";
 import { FiMoreHorizontal, FiSearch } from "react-icons/fi";
 
-export default function Header() {
+export default function Header(): JSX.Element {
   const [search, setSearch] = useState<string>("");
 
   return (
