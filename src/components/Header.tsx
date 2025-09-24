@@ -6,11 +6,17 @@ import { FiMoreHorizontal, FiSearch } from "react-icons/fi";
 
 export default function Header(): JSX.Element {
   const [search, setSearch] = useState<string>("");
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // track login state
+
+  const handleLogout = () => {
+    // Clear auth token/session in real app
+    setIsLoggedIn(false);
+  };
 
   return (
     <header className="w-full border-b shadow-sm bg-white">
       {/* Top Section */}
-      <div className="flex justify-center items-center px-4 space-x-10 py-4">
+      <div className="relative flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
         {/* Left Buttons */}
         <div className="flex gap-3">
           <Link href="/submit-eposter">
@@ -18,24 +24,38 @@ export default function Header(): JSX.Element {
               SUBMIT ePOSTER
             </button>
           </Link>
-          <Link href="/login">
-            <button className="bg-[#005173] text-white font-semibold px-4 py-2 rounded-md hover:bg-orange-400 transition">
-              LOGIN
+
+          {!isLoggedIn ? (
+            <Link href="/login">
+              <button className="bg-[#005173] text-white font-semibold px-4 py-2 rounded-md hover:bg-orange-400 transition">
+                LOGIN
+              </button>
+            </Link>
+          ) : (
+            <button
+              onClick={handleLogout}
+              className="bg-red-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-orange-500 transition"
+            >
+              LOGOUT
             </button>
-          </Link>
+          )}
         </div>
 
-        {/* Logo */}
-        <div className="px-30 py-3 w-170">
-          <h1>
-            <img src="/Eposter.svg" className="h-25 w-55" />
-          </h1>
+        {/* Centered Logo */}
+        <div className="absolute left-1/2 -translate-x-1/2">
+          <img
+            src="/Eposter.svg"
+            alt="ePoster Logo"
+            className="h-12 w-auto object-contain"
+          />
         </div>
 
         {/* More Button */}
-        <button className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center shadow">
-          <FiMoreHorizontal size={22} />
-        </button>
+        <div className="flex items-center">
+          <button className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center shadow">
+            <FiMoreHorizontal size={22} />
+          </button>
+        </div>
       </div>
 
       {/* Search Bar */}

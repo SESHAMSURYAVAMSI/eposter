@@ -5,7 +5,7 @@ export default function Footer(): JSX.Element {
   return (
     <footer className="bg-[#004466] text-white py-10 px-6 mt-10">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
-        {/* Left Stats Section done */}
+        {/* Left Stats Section */}
         <div>
           <h2 className="mb-4">
             <img src="/eposter1.svg" className="h-15 w-30" alt="ePoster Logo" />
@@ -28,12 +28,20 @@ export default function Footer(): JSX.Element {
 
         {/* Services */}
         <div>
-          <h3 className="text-lg font-semibold text-orange-400 mb-4">OUR SERVICES</h3>
+          <h3 className="text-lg font-semibold text-orange-400 mb-4 hover:text-white transition">
+            OUR SERVICES
+          </h3>
           <ul className="space-y-2 text-sm">
             {["ePoster Management", "ePoster Hardware", "ePoster Software"].map(
               (item, i) => (
-                <li key={i}>
-                  <span className="hover:text-orange-400 cursor-pointer">{item}</span>
+                <li
+                  key={i}
+                  className="cursor-pointer flex items-center space-x-2 transition"
+                >
+                  <span>&gt;</span>
+                  <span className="hover:text-orange-400 hover:underline transition">
+                    {item}
+                  </span>
                 </li>
               )
             )}
@@ -42,12 +50,20 @@ export default function Footer(): JSX.Element {
 
         {/* Submissions */}
         <div>
-          <h3 className="text-lg font-semibold text-orange-400 mb-4">SUBMISSIONS</h3>
+          <h3 className="text-lg font-semibold text-orange-400 mb-4 hover:text-white transition">
+            SUBMISSIONS
+          </h3>
           <ul className="space-y-2 text-sm">
             {["Submit an ePoster", "Submit an Event", "Submit an Enquiry"].map(
               (item, i) => (
-                <li key={i}>
-                  <span className="hover:text-orange-400 cursor-pointer">{item}</span>
+                <li
+                  key={i}
+                  className="cursor-pointer flex items-center space-x-2 transition"
+                >
+                  <span>&gt;</span>
+                  <span className="hover:text-orange-400 hover:underline transition">
+                    {item}
+                  </span>
                 </li>
               )
             )}
@@ -56,24 +72,34 @@ export default function Footer(): JSX.Element {
 
         {/* Login + Social */}
         <div>
-          <h3 className="text-lg font-semibold text-orange-400 mb-4">LOGIN</h3>
+          <h3 className="text-lg font-semibold text-orange-400 mb-4 hover:text-white transition">
+            LOGIN
+          </h3>
           <ul className="space-y-2 text-sm mb-4">
             {["Presenter Login", "Reviewer Login"].map((item, i) => (
-              <li key={i}>
-                <span className="hover:text-orange-400 cursor-pointer">{item}</span>
+              <li
+                key={i}
+                className="cursor-pointer flex items-center space-x-2 transition"
+              >
+                <span>&gt;</span>
+                <span className="hover:text-orange-400 hover:underline transition">
+                  {item}
+                </span>
               </li>
             ))}
           </ul>
           <div className="flex space-x-4">
-            {[FaFacebookF, FaInstagram, FaLinkedinIn].map((Icon: React.ComponentType, i) => (
-              <a
-                key={i}
-                href="#"
-                className="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#004466] hover:bg-orange-400 hover:text-white transition"
-              >
-                <Icon />
-              </a>
-            ))}
+            {[FaFacebookF, FaInstagram, FaLinkedinIn].map(
+              (Icon: React.ComponentType, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  className="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#004466] hover:bg-orange-400 hover:text-white transition"
+                >
+                  <Icon />
+                </a>
+              )
+            )}
           </div>
         </div>
       </div>
