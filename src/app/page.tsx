@@ -1,3 +1,5 @@
+import { JSX } from "react";
+
 export default function Home(): JSX.Element {
   return (
     <section className="text-center mt-10">
