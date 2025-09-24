@@ -4,7 +4,7 @@ export default function Footer(): JSX.Element {
   return (
     <footer className="bg-[#004466] text-white py-10 px-6 mt-10">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
-        {/* Left Stats Section */}
+        {/* Left Stats Section done */}
         <div>
           <h2 className="mb-4">
             <img src="/eposter1.svg" className="h-15 w-30" />
