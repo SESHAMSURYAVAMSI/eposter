@@ -20,14 +20,14 @@ export default function Header(): JSX.Element {
         {/* Left Buttons */}
         <div className="flex gap-3">
           <Link href="/submit-eposter">
-            <button className="bg-[#005173] text-white font-semibold px-4 py-2 rounded-md hover:bg-orange-400 transition">
+            <button className="bg-[#005173] text-white font-semibold px-2 py-1 rounded-md hover:bg-orange-400 transition">
               SUBMIT ePOSTER
             </button>
           </Link>
 
           {!isLoggedIn ? (
             <Link href="/login">
-              <button className="bg-[#005173] text-white font-semibold px-4 py-2 rounded-md hover:bg-orange-400 transition">
+              <button className="bg-[#005173] text-white font-semibold px-2 py-1 rounded-md hover:bg-orange-400 transition">
                 LOGIN
               </button>
             </Link>
