@@ -130,9 +130,12 @@ export default function SignupForm() {
           />
           Remember me
         </label>
-        <Link href="/forgot-password" className="text-[#005173]">
-          Forget Password?
-        </Link>
+          {/* Forgot Password link */}
+          <div className="flex justify-end">
+            <Link href="/reset-password" className="text-sm text-[#004466] hover:underline">
+              Forgot Password?
+            </Link>
+          </div>
       </div>
 
       <button

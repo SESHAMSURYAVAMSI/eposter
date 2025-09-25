@@ -18,7 +18,7 @@ export default function Header(): JSX.Element {
 
     checkLogin(); // initial check
     window.addEventListener("storage", checkLogin); // multi-tab
-    window.addEventListener("login", checkLogin);   // same-tab custom event
+    window.addEventListener("login", checkLogin); // same-tab custom event
 
     return () => {
       window.removeEventListener("storage", checkLogin);
@@ -36,17 +36,30 @@ export default function Header(): JSX.Element {
     router.push("/login"); // redirect after logout
   };
 
+  const handleSubmitEposterClick = () => {
+    if (isLoggedIn) {
+      router.push("/dashboard/submit-eposter"); // ✅ redirect inside dashboard
+    } else {
+      router.push("/login");
+    }
+  };
+
   return (
     <header className="w-full border-b shadow-sm bg-white">
       {/* Top Section */}
       <div className="relative flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
         {/* Left Buttons */}
         <div className="flex gap-3">
-          <Link href="/submit-eposter">
-            <button className="bg-[#005173] text-white font-semibold px-2 py-1 rounded-md hover:bg-orange-400 transition">
-              SUBMIT ePOSTER
-            </button>
-          </Link>
+          <button
+            onClick={handleSubmitEposterClick}
+            className={`font-semibold px-2 py-1 rounded-md transition ${
+              isLoggedIn
+                ? "bg-[#005173] text-white hover:bg-orange-400"
+                : "bg-gray-300 text-gray-500 hover:bg-gray-400"
+            }`}
+          >
+            SUBMIT ePOSTER
+          </button>
 
           {!isLoggedIn ? (
             <Link href="/login">
