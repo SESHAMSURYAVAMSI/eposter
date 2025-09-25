@@ -1,4 +1,6 @@
 "use client";
+
+
 import { useState } from "react";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
@@ -35,7 +37,7 @@ export default function LoginForm() {
       <input
         type="email"
         name="email"
-        placeholder="@gmail.com"
+        placeholder="example@gmail.com"
         value={form.email}
         onChange={handleChange}
         className="w-full p-3 mb-3 border rounded-lg"
