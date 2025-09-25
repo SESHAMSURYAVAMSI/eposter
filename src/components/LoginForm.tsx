@@ -1,11 +1,12 @@
 "use client";
 
-
 import { useState } from "react";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
+  const router = useRouter();
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -19,33 +20,75 @@ export default function LoginForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login data:", form);
-    // TODO: Connect with API
+
+    const savedUser = localStorage.getItem("user");
+    if (!savedUser) {
+      alert("No user found. Please sign up first.");
+      return;
+    }
+
+    const parsedUser = JSON.parse(savedUser);
+
+    if (form.email === parsedUser.name || form.email === parsedUser.institute) {
+      if (form.password === parsedUser.password) {
+        // ✅ Save logged in user
+        localStorage.setItem("loggedInUser", JSON.stringify(parsedUser));
+
+        // ✅ Dispatch custom event so Header updates
+        window.dispatchEvent(new Event("login"));
+
+        alert("Login successful!");
+        router.push("/dashboard"); // Redirect
+      } else {
+        alert("Incorrect password!");
+      }
+    } else {
+      alert("User not found!");
+    }
   };
 
   const handleGoogleLogin = () => {
     console.log("Google login clicked");
-    // TODO: Implement Google OAuth
+    alert("Google login is not implemented yet.");
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-8 rounded-2xl shadow-md w-96">
+    <form
+      onSubmit={handleSubmit}
+      className="bg-white p-8 rounded-2xl shadow-md w-96"
+    >
       <h2 className="text-xl font-bold text-center mb-6 text-[#005173]">
         Presenter Login
       </h2>
 
+      {/* Email/Username */}
+      <label
+        htmlFor="email"
+        className="block text-sm font-semibold text-gray-700 mb-1"
+      >
+        Login
+      </label>
       <input
-        type="email"
+        type="text"
+        id="email"
         name="email"
-        placeholder="example@gmail.com"
+        placeholder="Enter Name or Institute"
         value={form.email}
         onChange={handleChange}
         className="w-full p-3 mb-3 border rounded-lg"
         required
       />
 
+      {/* Password */}
+      <label
+        htmlFor="password"
+        className="block text-sm font-semibold text-gray-700 mb-1"
+      >
+        Password
+      </label>
       <input
         type="password"
+        id="password"
         name="password"
         placeholder="Enter your Password"
         value={form.password}

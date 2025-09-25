@@ -1,16 +1,39 @@
 "use client";
 
 import Link from "next/link";
-import { JSX, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import { FiMoreHorizontal, FiSearch } from "react-icons/fi";
+import { useRouter } from "next/navigation";
 
 export default function Header(): JSX.Element {
   const [search, setSearch] = useState<string>("");
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // track login state
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkLogin = () => {
+      const loggedInUser = localStorage.getItem("loggedInUser");
+      setIsLoggedIn(!!loggedInUser);
+    };
+
+    checkLogin(); // initial check
+    window.addEventListener("storage", checkLogin); // multi-tab
+    window.addEventListener("login", checkLogin);   // same-tab custom event
+
+    return () => {
+      window.removeEventListener("storage", checkLogin);
+      window.removeEventListener("login", checkLogin);
+    };
+  }, []);
 
   const handleLogout = () => {
-    // Clear auth token/session in real app
+    localStorage.removeItem("loggedInUser");
     setIsLoggedIn(false);
+
+    // dispatch custom event so header updates immediately
+    window.dispatchEvent(new Event("login"));
+
+    router.push("/login"); // redirect after logout
   };
 
   return (
@@ -34,7 +57,7 @@ export default function Header(): JSX.Element {
           ) : (
             <button
               onClick={handleLogout}
-              className="bg-red-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-orange-500 transition"
+              className="bg-[red] text-white font-semibold px-2 py-1 rounded-md hover:bg-orange-400 transition"
             >
               LOGOUT
             </button>

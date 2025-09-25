@@ -1,10 +1,11 @@
 "use client";
 
-
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function SignupForm() {
+  const router = useRouter();
   const [form, setForm] = useState({
     name: "",
     institute: "",
@@ -20,8 +21,34 @@ export default function SignupForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Signup data:", form);
-    // TODO: Connect to API
+
+    // Validation
+    if (!form.name || !form.institute || !form.password || !form.confirmPassword) {
+      alert("All fields are required!");
+      return;
+    }
+    if (form.password !== form.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    const userData = {
+      name: form.name,
+      institute: form.institute,
+      password: form.password,
+    };
+
+    // Save user details
+    localStorage.setItem("user", JSON.stringify(userData));
+
+    // ✅ Mark as logged in
+    localStorage.setItem("loggedInUser", JSON.stringify(userData));
+
+    // ✅ Dispatch custom login event so Header updates
+    window.dispatchEvent(new Event("login"));
+
+    alert("Signup successful! Redirecting to dashboard...");
+    router.push("/dashboard"); // Redirect after signup
   };
 
   return (
@@ -30,18 +57,28 @@ export default function SignupForm() {
         Presenter Sign-up
       </h2>
 
+      {/* Full Name */}
+      <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-1">
+        Full Name
+      </label>
       <input
         type="text"
+        id="name"
         name="name"
-        placeholder="Full Name"
+        placeholder="John Doe"
         value={form.name}
         onChange={handleChange}
         className="w-full p-3 mb-3 border rounded-lg"
         required
       />
 
+      {/* Institute */}
+      <label htmlFor="institute" className="block text-sm font-semibold text-gray-700 mb-1">
+        Institute / Affiliation
+      </label>
       <input
         type="text"
+        id="institute"
         name="institute"
         placeholder="Enter your Affiliation/Institute"
         value={form.institute}
@@ -50,8 +87,13 @@ export default function SignupForm() {
         required
       />
 
+      {/* Password */}
+      <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-1">
+        Password
+      </label>
       <input
         type="password"
+        id="password"
         name="password"
         placeholder="Password"
         value={form.password}
@@ -60,8 +102,16 @@ export default function SignupForm() {
         required
       />
 
+      {/* Confirm Password */}
+      <label
+        htmlFor="confirmPassword"
+        className="block text-sm font-semibold text-gray-700 mb-1"
+      >
+        Confirm Password
+      </label>
       <input
         type="password"
+        id="confirmPassword"
         name="confirmPassword"
         placeholder="Confirm Password"
         value={form.confirmPassword}
