@@ -43,7 +43,7 @@ export default function SignupForm() {
       <input
         type="text"
         name="institute"
-        placeholder="Affiliation/Institute"
+        placeholder="Enter your Affiliation/Institute"
         value={form.institute}
         onChange={handleChange}
         className="w-full p-3 mb-3 border rounded-lg"
