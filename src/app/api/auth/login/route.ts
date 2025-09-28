@@ -9,7 +9,6 @@ export async function POST(req: Request) {
 
     await connectToDatabase();
 
-    // user can login with either name or institute
     const user = await User.findOne({
       $or: [{ name: email }, { institute: email }],
     });
@@ -27,7 +26,12 @@ export async function POST(req: Request) {
       message: "Login successful!",
       user: { name: user.name, institute: user.institute },
     });
-  } catch (error) {
-    return NextResponse.json({ message: "Error logging in", error }, { status: 500 });
+  } catch (error: unknown) {
+    console.error("Login error:", error);
+
+    // Safely extract message
+    const message = error instanceof Error ? error.message : "Unknown error";
+
+    return NextResponse.json({ message: "Error logging in", error: message }, { status: 500 });
   }
 }
