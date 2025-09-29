@@ -19,7 +19,7 @@ export default function SignupForm() {
     setForm({ ...form, [name]: type === "checkbox" ? checked : value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!form.name || !form.institute || !form.password || !form.confirmPassword) {
@@ -31,30 +31,23 @@ export default function SignupForm() {
       return;
     }
 
-    try {
-      const res = await fetch("/api/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: form.name,
-          institute: form.institute,
-          password: form.password,
-        }),
-      });
+    // Save user data locally
+    const userData = {
+      name: form.name,
+      institute: form.institute,
+      password: form.password,
+      remember: form.remember,
+    };
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        alert(data.error || "Signup failed");
-        return;
-      }
-
-      alert("Signup successful! Redirecting...");
-      router.push("/dashboard");
-    } catch (error) {
-      console.error("Signup error:", error);
-      alert("Something went wrong. Try again.");
+    // If "Remember me" → store in localStorage, else sessionStorage
+    if (form.remember) {
+      localStorage.setItem("user", JSON.stringify(userData));
+    } else {
+      sessionStorage.setItem("user", JSON.stringify(userData));
     }
+
+    alert("Signup successful! Redirecting...");
+    router.push("/login");
   };
 
   return (

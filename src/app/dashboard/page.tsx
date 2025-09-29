@@ -1,57 +1,67 @@
-// app/dashboard/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-// Icons
-import { MdDashboard, MdPending } from "react-icons/md";
-import { RiFilePaper2Line } from "react-icons/ri";
-import { FaUser, FaSignOutAlt, FaCog, FaFileAlt, FaFileArchive } from "react-icons/fa";
+type User = {
+  name: string;
+  institute: string;
+  // add other properties as needed
+};
 
 export default function DashboardPage() {
-  const [active, setActive] = useState("Dashboard");
+  const [user, setUser] = useState<User | null>(null);
 
-  const menuItems = [
-    { name: "Dashboard", icon: <MdDashboard size={20} /> },
-    { name: "My Profile", icon: <FaUser size={20} /> },
-    { name: "Submit ePoster", icon: <RiFilePaper2Line size={20} /> },
-    { name: "Published ePoster", icon: <FaFileAlt size={20} /> },       // works fine
-    { name: "Unpublished ePoster", icon: <FaFileArchive size={20} /> }, // works fine
-    { name: "Pending Review", icon: <MdPending size={20} /> },
-    { name: "Settings", icon: <FaCog size={20} /> },
-    { name: "Sign Out", icon: <FaSignOutAlt size={20} /> },
-  ];
+  useEffect(() => {
+    const storedUser =
+      localStorage.getItem("user") || sessionStorage.getItem("user");
+
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  if (!user) return null;
 
   return (
-    <div className="flex min-h-screen">
-      {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-lg p-4">
-        <nav className="space-y-2">
-          {menuItems.map((item) => (
-            <button
-              key={item.name}
-              onClick={() => setActive(item.name)}
-              className={`flex items-center w-full px-4 py-3 rounded-xl text-left transition
-                ${
-                  active === item.name
-                    ? "bg-teal-700 text-white shadow-md"
-                    : "text-gray-600 hover:bg-gray-100"
-                }`}
-            >
-              <span className="mr-3">{item.icon}</span>
-              {item.name}
-            </button>
-          ))}
-        </nav>
-      </aside>
+    <div>
+      <h1 className="text-2xl font-bold text-[#005173]">DASHBOARD</h1>
+      <h2 className="mt-4 text-xl font-semibold">
+        Welcome {user.name}
+      </h2>
+      <p className="text-gray-600 mb-8">
+        <strong>Affiliation:</strong> {user.institute}
+      </p>
 
-      {/* Main Content */}
-      <main className="flex-1 p-6">
-        <h1 className="text-2xl font-bold">{active}</h1>
-        <p className="mt-4 text-gray-600">
-          This is the <b>{active}</b> section content.
+      {/* Stats */}
+      <div className="grid grid-cols-3 gap-6 mb-8">
+        <div className="bg-green-100 border-l-4 border-green-600 p-6 text-center rounded shadow">
+          <h2 className="font-bold">PUBLISHED ePOSTER</h2>
+          <p className="text-4xl font-bold text-teal-800">06</p>
+        </div>
+        <div className="bg-red-100 border-l-4 border-red-600 p-6 text-center rounded shadow">
+          <h2 className="font-bold">UNPUBLISHED ePOSTER</h2>
+          <p className="text-4xl font-bold text-teal-800">03</p>
+        </div>
+        <div className="bg-yellow-100 border-l-4 border-yellow-600 p-6 text-center rounded shadow">
+          <h2 className="font-bold">PENDING REVIEW</h2>
+          <p className="text-4xl font-bold text-teal-800">01</p>
+        </div>
+      </div>
+
+      {/* Recent Posters */}
+      <h2 className="text-lg font-bold mb-4">RECENT POSTERS:</h2>
+      <div className="border p-4 rounded shadow">
+        <p className="text-orange-600 font-semibold">UROLOGY</p>
+        <h3 className="font-bold">
+          Dual Primary Malignancy in Different organ System - Diagnostic Dilemma & Management Challenges!
+        </h3>
+        <p className="text-sm text-gray-600 mt-2">
+          <strong>Presenting Author:</strong> Manoj Kiran Vaidya <br />
+          <strong>Affiliation:</strong> BLDE DEEMED TO BE UNIVERSITY, HYD <br />
+          <strong>Event:</strong> SZUSICON 2023, Kerala <br />
+          <strong>Publish Date:</strong> 24-02-2025
         </p>
-      </main>
+      </div>
     </div>
   );
 }
