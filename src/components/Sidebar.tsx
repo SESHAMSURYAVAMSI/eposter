@@ -79,7 +79,8 @@ export default function Sidebar() {
           <li>
             <button
               onClick={handleLogout}
-              className="w-full text-left p-2 bg-red-500 text-white rounded hover:bg-red-600"
+              // className="w-full text-left p-2 bg-red-500 text-white rounded hover:bg-red-600"
+              className="block p-2 hover:bg-gray-100 rounded"
             >
               🚪 Sign Out
             </button>

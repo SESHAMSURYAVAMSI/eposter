@@ -65,8 +65,8 @@ export default function DashboardPage() {
       </div>
 
       {/* Recent Posters */}
-      <h2 className="text-lg font-bold mb-4">RECENT POSTERS:</h2>
-      <div className="border p-4 rounded shadow">
+      <h2 className="text-lg font-bold mb-4">RECENT POSTERS WILL BE DISPLAY HERE</h2>
+      {/* <div className="border p-4 rounded shadow">
         <p className="text-orange-600 font-semibold">UROLOGY</p>
         <h3 className="font-bold">
           Dual Primary Malignancy in Different organ System - Diagnostic Dilemma
@@ -78,7 +78,7 @@ export default function DashboardPage() {
           <strong>Event:</strong> SZUSICON 2023, Kerala <br />
           <strong>Publish Date:</strong> 24-02-2025
         </p>
-      </div>
+      </div> */}
     </div>
   );
 }
