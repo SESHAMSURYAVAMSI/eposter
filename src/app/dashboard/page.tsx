@@ -24,27 +24,43 @@ export default function DashboardPage() {
 
   return (
     <div>
+      {/* Heading */}
       <h1 className="text-2xl font-bold text-[#005173]">DASHBOARD</h1>
-      <h2 className="mt-4 text-xl font-semibold">
-        Welcome {user.name}
-      </h2>
+      <h2 className="mt-4 text-xl font-semibold">Welcome {user.name}</h2>
       <p className="text-gray-600 mb-8">
         <strong>Affiliation:</strong> {user.institute}
       </p>
 
-      {/* Stats */}
-      <div className="grid grid-cols-3 gap-6 mb-8">
-        <div className="bg-green-100 border-l-4 border-green-600 p-6 text-center rounded shadow">
-          <h2 className="font-bold">PUBLISHED ePOSTER</h2>
-          <p className="text-4xl font-bold text-teal-800">06</p>
+      {/* Stats - Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        {/* Published */}
+        <div className="w-full shadow-md rounded-md border border-gray-200 overflow-hidden">
+          <div className="bg-green-500 text-white text-center py-2 text-sm font-semibold">
+            PUBLISHED ePOSTER
+          </div>
+          <div className="flex items-center justify-center py-6 text-4xl font-bold text-blue-900">
+            06
+          </div>
         </div>
-        <div className="bg-red-100 border-l-4 border-red-600 p-6 text-center rounded shadow">
-          <h2 className="font-bold">UNPUBLISHED ePOSTER</h2>
-          <p className="text-4xl font-bold text-teal-800">03</p>
+
+        {/* Unpublished */}
+        <div className="w-full shadow-md rounded-md border border-gray-200 overflow-hidden">
+          <div className="bg-red-500 text-white text-center py-2 text-sm font-semibold">
+            UNPUBLISHED ePOSTER
+          </div>
+          <div className="flex items-center justify-center py-6 text-4xl font-bold text-blue-900">
+            03
+          </div>
         </div>
-        <div className="bg-yellow-100 border-l-4 border-yellow-600 p-6 text-center rounded shadow">
-          <h2 className="font-bold">PENDING REVIEW</h2>
-          <p className="text-4xl font-bold text-teal-800">01</p>
+
+        {/* Pending */}
+        <div className="w-full shadow-md rounded-md border border-gray-200 overflow-hidden">
+          <div className="bg-orange-500 text-white text-center py-2 text-sm font-semibold">
+            PENDING REVIEW
+          </div>
+          <div className="flex items-center justify-center py-6 text-4xl font-bold text-blue-900">
+            01
+          </div>
         </div>
       </div>
 
@@ -53,7 +69,8 @@ export default function DashboardPage() {
       <div className="border p-4 rounded shadow">
         <p className="text-orange-600 font-semibold">UROLOGY</p>
         <h3 className="font-bold">
-          Dual Primary Malignancy in Different organ System - Diagnostic Dilemma & Management Challenges!
+          Dual Primary Malignancy in Different organ System - Diagnostic Dilemma
+          & Management Challenges!
         </h3>
         <p className="text-sm text-gray-600 mt-2">
           <strong>Presenting Author:</strong> Manoj Kiran Vaidya <br />

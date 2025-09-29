@@ -18,22 +18,74 @@ export default function Sidebar() {
 
       <nav className="flex-1">
         <ul className="space-y-3">
-          <li><Link href="/dashboard" className="block p-2 hover:bg-gray-100 rounded">🏠 Dashboard</Link></li>
-          <li><Link href="/dashboard/profile" className="block p-2 hover:bg-gray-100 rounded">👤 My Profile</Link></li>
-          <li><Link href="/dashboard/submit" className="block p-2 hover:bg-gray-100 rounded">📝 Submit ePoster</Link></li>
-          <li><Link href="/dashboard/published" className="block p-2 hover:bg-gray-100 rounded">✅ Published ePoster</Link></li>
-          <li><Link href="/dashboard/unpublished" className="block p-2 hover:bg-gray-100 rounded">📂 Unpublished ePoster</Link></li>
-          <li><Link href="/dashboard/review" className="block p-2 hover:bg-gray-100 rounded">🕒 Pending Review</Link></li>
-          <li><Link href="/dashboard/settings" className="block p-2 hover:bg-gray-100 rounded">⚙️ Settings</Link></li>
+          <li>
+            <Link
+              href="/dashboard"
+              className="block p-2 hover:bg-gray-100 rounded"
+            >
+              🏠 Dashboard
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/dashboard/profile"
+              className="block p-2 hover:bg-gray-100 rounded"
+            >
+              👤 My Profile
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/dashboard/submit"
+              className="block p-2 hover:bg-gray-100 rounded"
+            >
+              📝 Submit ePoster
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/dashboard/published"
+              className="block p-2 hover:bg-gray-100 rounded"
+            >
+              ✅ Published ePoster
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/dashboard/unpublished"
+              className="block p-2 hover:bg-gray-100 rounded"
+            >
+              📂 Unpublished ePoster
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/dashboard/review"
+              className="block p-2 hover:bg-gray-100 rounded"
+            >
+              🕒 Pending Review
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/dashboard/settings"
+              className="block p-2 hover:bg-gray-100 rounded"
+            >
+              ⚙️ Settings
+            </Link>
+          </li>
+
+          {/* Sign Out placed directly below Settings */}
+          <li>
+            <button
+              onClick={handleLogout}
+              className="w-full text-left p-2 bg-red-500 text-white rounded hover:bg-red-600"
+            >
+              🚪 Sign Out
+            </button>
+          </li>
         </ul>
       </nav>
-
-      <button
-        onClick={handleLogout}
-        className="mt-6 w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600"
-      >
-        🚪 Sign Out
-      </button>
     </aside>
   );
 }
