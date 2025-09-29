@@ -1,33 +1,39 @@
-import mongoose from "mongoose";
+import mongoose, { Mongoose } from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI as string;
 
 if (!MONGODB_URI) {
-  throw new Error("Please define the MONGODB_URI in .env.local");
+  throw new Error("❌ Please add your Mongo URI to .env.local");
 }
 
-// Extend NodeJS global type to include mongoose
+// 🔹 Tell TypeScript that we are adding a custom property to `global`
 declare global {
   // eslint-disable-next-line no-var
   var _mongoose: {
-    conn: typeof mongoose | null;
-    promise: Promise<typeof mongoose> | null;
+    conn: Mongoose | null;
+    promise: Promise<Mongoose> | null;
   } | undefined;
 }
 
-// Use _mongoose instead of mongoose to avoid name conflict
-const cached = global._mongoose || { conn: null, promise: null };
+// ✅ Use the global cache (avoids multiple connections during hot reloads in Next.js)
+let cached = global._mongoose;
 
-export async function connectToDatabase() {
+if (!cached) {
+  cached = global._mongoose = { conn: null, promise: null };
+}
+
+export async function connectToDatabase(): Promise<Mongoose> {
+  if (!cached) {
+    throw new Error("MongoDB cache is not initialized.");
+  }
   if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
     cached.promise = mongoose.connect(MONGODB_URI, {
-      bufferCommands: false,
-    }).then((mongoose) => mongoose);
+      dbName: "eposter_db", // change if needed
+    });
   }
 
   cached.conn = await cached.promise;
-  global._mongoose = cached; // Save cached object globally
   return cached.conn;
 }

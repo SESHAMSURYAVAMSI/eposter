@@ -49,7 +49,7 @@ export default function LoginForm() {
 
   const handleGoogleLogin = () => {
     console.log("Google login clicked");
-    alert("Google login is not implemented yet.");
+    alert("Under Integration.");
   };
 
   return (

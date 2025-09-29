@@ -19,10 +19,9 @@ export default function SignupForm() {
     setForm({ ...form, [name]: type === "checkbox" ? checked : value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validation
     if (!form.name || !form.institute || !form.password || !form.confirmPassword) {
       alert("All fields are required!");
       return;
@@ -32,23 +31,30 @@ export default function SignupForm() {
       return;
     }
 
-    const userData = {
-      name: form.name,
-      institute: form.institute,
-      password: form.password,
-    };
+    try {
+      const res = await fetch("/api/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          institute: form.institute,
+          password: form.password,
+        }),
+      });
 
-    // Save user details
-    localStorage.setItem("user", JSON.stringify(userData));
+      const data = await res.json();
 
-    // ✅ Mark as logged in
-    localStorage.setItem("loggedInUser", JSON.stringify(userData));
+      if (!res.ok) {
+        alert(data.error || "Signup failed");
+        return;
+      }
 
-    // ✅ Dispatch custom login event so Header updates
-    window.dispatchEvent(new Event("login"));
-
-    alert("Signup successful! Redirecting to dashboard...");
-    router.push("/dashboard"); // Redirect after signup
+      alert("Signup successful! Redirecting...");
+      router.push("/dashboard");
+    } catch (error) {
+      console.error("Signup error:", error);
+      alert("Something went wrong. Try again.");
+    }
   };
 
   return (
@@ -103,10 +109,7 @@ export default function SignupForm() {
       />
 
       {/* Confirm Password */}
-      <label
-        htmlFor="confirmPassword"
-        className="block text-sm font-semibold text-gray-700 mb-1"
-      >
+      <label htmlFor="confirmPassword" className="block text-sm font-semibold text-gray-700 mb-1">
         Confirm Password
       </label>
       <input
@@ -130,12 +133,11 @@ export default function SignupForm() {
           />
           Remember me
         </label>
-          {/* Forgot Password link */}
-          <div className="flex justify-end">
-            <Link href="/reset-password" className="text-sm text-[#004466] hover:underline">
-              Forgot Password?
-            </Link>
-          </div>
+        <div className="flex justify-end">
+          <Link href="/reset-password" className="text-sm text-[#004466] hover:underline">
+            Forgot Password?
+          </Link>
+        </div>
       </div>
 
       <button
